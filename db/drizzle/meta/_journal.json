@@ -1,13 +1,20 @@
 {
-	"version": "7",
-	"dialect": "sqlite",
-	"entries": [
-		{
-			"idx": 0,
-			"version": "6",
-			"when": 1760948277492,
-			"tag": "0000_cuddly_mole_man",
-			"breakpoints": true
-		}
-	]
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1760948277492,
+      "tag": "0000_cuddly_mole_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1761474026781,
+      "tag": "0001_sudden_stephen_strange",
+      "breakpoints": true
+    }
+  ]
 }
