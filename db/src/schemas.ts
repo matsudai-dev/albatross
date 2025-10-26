@@ -51,31 +51,31 @@ export const birdsTable = sqliteTable(
 	],
 );
 
-/** Schema for `locations` table */
-export const locationsTable = sqliteTable(
-	"locations",
+/** Schema for `habitats` table */
+export const habitatsTable = sqliteTable(
+	"habitats",
 	{
 		...commonPrimaryFields,
 		nameJa: text("name_ja").notNull().unique(),
 		...commonAuditFields,
 	},
 	(t) => [
-		index("locations_id_index").on(t.id),
-		index("locations_name_ja_index").on(t.nameJa),
+		index("habitats_id_index").on(t.id),
+		index("habitats_name_ja_index").on(t.nameJa),
 	],
 );
 
-/** Schema for `birds_locations` table */
-export const birdsLocationsTable = sqliteTable(
-	"birds_locations",
+/** Schema for `birds_habitats` table */
+export const birdsHabitatsTable = sqliteTable(
+	"birds_habitats",
 	{
 		birdId: integer("bird_id")
 			.notNull()
 			.references(() => birdsTable.id),
-		locationId: integer("location_id")
+		habitatId: integer("habitat_id")
 			.notNull()
-			.references(() => locationsTable.id),
+			.references(() => habitatsTable.id),
 		...commonAuditFields,
 	},
-	(t) => [primaryKey({ columns: [t.birdId, t.locationId] })],
+	(t) => [primaryKey({ columns: [t.birdId, t.habitatId] })],
 );
