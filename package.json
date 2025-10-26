@@ -1,0 +1,57 @@
+{
+	"name": "albatross",
+	"version": "0.1.0",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"// === Database Scripts (Drizzle + Wrangler) ===": "",
+		"db:generate": "drizzle-kit generate --config ./db/drizzle.config.ts",
+		"db:create:stg": "wrangler d1 create albatross-staging",
+		"db:create:prod": "wrangler d1 create albatross",
+		"db:migrate:local": "echo \"y\" | wrangler d1 migrations apply DB --local",
+		"db:migrate:stg": "echo \"y\" | wrangler d1 migrations apply DB --env staging --remote",
+		"db:migrate:prod": "echo \"y\" | wrangler d1 migrations apply DB --remote",
+		"db:seed:local": "bun run ./db/src/seed.local.ts",
+		"db:seed:stg": "bun run ./db/src/seed.remote.trigger.ts staging",
+		"db:seed:prod": "bun run ./db/src/seed.remote.trigger.ts production",
+		"db:setup": "bun run db:generate && bun run db:migrate:local && bun run db:seed:local",
+		"db:delete": "rm -rf .wrangler/state/v3/d1/miniflare-D1DatabaseObject",
+		"db:reset": "bun run db:delete && bun run db:setup",
+
+		"// === Development & Testing Scripts ===": "",
+		"dev": "vite",
+		"biome": "biome check --write --unsafe",
+		"tsc": "tsc --noEmit",
+		"test": "bun test ./app ./common",
+		"e2e:chromium": "bun run db:reset && playwright test --project=chromium",
+		"e2e:firefox": "bun run db:reset && playwright test --project=firefox",
+		"e2e:webkit": "bun run db:reset && playwright test --project=webkit",
+		"e2e": "vite build --mode client && vite build && bun run e2e:chromium && bun run e2e:firefox && bun run e2e:webkit",
+
+		"// === Build & Deployment Scripts ===": "",
+		"preview": "vite build --mode client && vite build && wrangler dev --ip 0.0.0.0",
+		"deploy:stg": "vite build --mode client && vite build && wrangler deploy --env staging",
+		"deploy:prod": "vite build --mode client && vite build && wrangler deploy"
+	},
+	"dependencies": {
+		"drizzle-orm": "latest",
+		"hono": "latest",
+		"honox": "latest"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "latest",
+		"@cloudflare/workers-types": "latest",
+		"@hono/vite-build": "latest",
+		"@hono/vite-dev-server": "latest",
+		"@playwright/test": "latest",
+		"@tailwindcss/vite": "latest",
+		"@types/bun": "latest",
+		"@types/node": "latest",
+		"drizzle-kit": "latest",
+		"happy-dom": "latest",
+		"tailwindcss": "latest",
+		"typescript": "latest",
+		"vite": "latest",
+		"wrangler": "latest"
+	}
+}

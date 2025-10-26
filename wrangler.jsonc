@@ -1,0 +1,31 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "albatross",
+	"main": "./dist/index.js",
+	"compatibility_date": "2025-04-12",
+	"compatibility_flags": ["nodejs_compat"],
+	"assets": {
+		"directory": "./dist"
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "albatross",
+			"database_id": "57d4a2e3-4067-40e9-a1f4-1c12a9571144",
+			"migrations_dir": "./db/drizzle"
+		}
+	],
+	"env": {
+		"staging": {
+			"name": "albatross-staging",
+			"d1_databases": [
+				{
+					"binding": "DB",
+					"database_name": "albatross-staging",
+					"database_id": "1da9b217-913f-40a0-9395-aeb915ecdc02",
+					"migrations_dir": "./db/drizzle"
+				}
+			]
+		}
+	}
+}

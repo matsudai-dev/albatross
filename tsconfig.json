@@ -1,0 +1,20 @@
+{
+	"compilerOptions": {
+		"target": "ESNext",
+		"module": "ESNext",
+		"moduleResolution": "Bundler",
+		"strict": true,
+		"skipLibCheck": true,
+		"noUncheckedIndexedAccess": true,
+		"lib": ["ESNext", "DOM"],
+		"jsx": "react-jsx",
+		"jsxImportSource": "hono/jsx",
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["app/*"],
+			"@common/*": ["common/src/*"],
+			"@db/*": ["db/src/*"]
+		}
+	},
+	"include": ["**/*.ts", "**/*.tsx"]
+}

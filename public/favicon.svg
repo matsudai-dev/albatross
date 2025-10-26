@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="t">
+  <title id="t">Bird head favicon</title>
+  <!-- Neck/chest -->
+  <ellipse cx="26" cy="44" rx="18" ry="12" fill="#16a34a" />
+  <!-- Head -->
+  <circle cx="26" cy="28" r="18" fill="#22c55e" />
+  <!-- Crown/crest -->
+  <path d="M14 17c4-6 12-9 18-9-3 3-4 6-4 9-4-2-8-2-14 0z" fill="#15803d" opacity=".9"/>
+  <!-- Beak -->
+  <path d="M34 25 L56 31 L34 37 Q32 31 34 25z" fill="#f59e0b" />
+  <!-- Beak highlight -->
+  <path d="M36 28 L48 31 L36 34 Z" fill="#fbbf24" opacity=".8"/>
+  <!-- Eye -->
+  <circle cx="24.5" cy="26.5" r="3.5" fill="#0b0b0b"/>
+  <circle cx="25.8" cy="25.4" r="1.2" fill="#ffffff"/>
+  <!-- Subtle head shadow -->
+  <path d="M8 28a18 18 0 0 0 36 0c0-2-1-4-2-6a18 18 0 0 1-32 6z" fill="#166534" opacity=".18"/>
+</svg>
