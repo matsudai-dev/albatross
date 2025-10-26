@@ -14,10 +14,7 @@ export default {
 			await db.insert(birdsTable).values(birdsSeed).onConflictDoNothing();
 
 			console.log("Seeding habitats...");
-			await db
-				.insert(habitatsTable)
-				.values(habitatsSeed)
-				.onConflictDoNothing();
+			await db.insert(habitatsTable).values(habitatsSeed).onConflictDoNothing();
 
 			console.log("Seeding birds_habitats...");
 			const allBirds = await db
@@ -40,9 +37,7 @@ export default {
 				}
 
 				for (const habitatNameJa of entry.habitatNameJa) {
-					const habitat = allHabitats.find(
-						(l) => l.nameJa === habitatNameJa,
-					);
+					const habitat = allHabitats.find((l) => l.nameJa === habitatNameJa);
 					if (!habitat) {
 						console.warn(`Habitat not found: ${habitatNameJa}`);
 						continue;
