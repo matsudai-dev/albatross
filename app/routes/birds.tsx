@@ -50,9 +50,11 @@ export default createRoute(async (c) => {
 	}));
 
 	return c.render(
-		<div class="py-8 text-center">
+		<>
 			<title>野鳥一覧</title>
+			<h1>野鳥一覧</h1>
+			<h2>いま見つけられる野鳥を探そう</h2>
 			<BirdsTable birds={birds} />
-		</div>,
+		</>,
 	);
 });
