@@ -1,3 +1,4 @@
+import type { JSX } from "hono/jsx/jsx-runtime";
 import type { AnyNode, AnyToken, ElementNode } from "./types";
 
 /** Converts an HTML string into an array of tokens. */
@@ -163,9 +164,9 @@ export function parse(tokens: Array<AnyToken>): AnyNode {
 	return root;
 }
 
-/** Parses an HTML string into a node tree. */
-export function parseHtml(html: string): AnyNode {
-	const tokens = tokenize(html);
+/** Parses a JSX element into a node tree. */
+export function parseJSXElement(jsx: JSX.Element): AnyNode {
+	const tokens = tokenize(jsx.toString());
 	return parse(tokens);
 }
 

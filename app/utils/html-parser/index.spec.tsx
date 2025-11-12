@@ -3,7 +3,7 @@ import {
 	getElementsByAttribute,
 	getElementsByTagName,
 	parse,
-	parseHtml,
+	parseJSXElement,
 	tokenize,
 } from ".";
 
@@ -196,16 +196,27 @@ describe("parse", () => {
 
 describe("getElementsByTagName", () => {
 	it("should find a single element by tag name", () => {
-		const html = "<div><p>Hello</p></div>";
-		const root = parseHtml(html);
+		const jsx = (
+			<div>
+				<p>Hello</p>
+			</div>
+		);
+		const root = parseJSXElement(jsx);
 		const elements = getElementsByTagName(root, "p");
 		expect(elements.length).toBe(1);
 		expect(elements[0]?.tagName).toBe("p");
 	});
 
 	it("should find multiple elements by tag name", () => {
-		const html = "<div><p>One</p><span><p>Two</p></span></div>";
-		const root = parseHtml(html);
+		const jsx = (
+			<div>
+				<p>One</p>
+				<span>
+					<p>Two</p>
+				</span>
+			</div>
+		);
+		const root = parseJSXElement(jsx);
 		const elements = getElementsByTagName(root, "p");
 		expect(elements.length).toBe(2);
 		expect(elements[0]?.tagName).toBe("p");
@@ -213,31 +224,46 @@ describe("getElementsByTagName", () => {
 	});
 
 	it("should return an empty array if no elements are found", () => {
-		const html = "<div><p>Hello</p></div>";
-		const root = parseHtml(html);
+		const jsx = (
+			<div>
+				<p>Hello</p>
+			</div>
+		);
+		const root = parseJSXElement(jsx);
 		const elements = getElementsByTagName(root, "span");
 		expect(elements.length).toBe(0);
 	});
 
 	it("should find deeply nested elements", () => {
-		const html =
-			"<body><main><div><section><h1>Title</h1></section></div></main></body>";
-		const root = parseHtml(html);
+		const jsx = (
+			<body>
+				<main>
+					<div>
+						<section>
+							<h1>Title</h1>
+						</section>
+					</div>
+				</main>
+			</body>
+		);
+		const root = parseJSXElement(jsx);
 		const elements = getElementsByTagName(root, "h1");
 		expect(elements.length).toBe(1);
 		expect(elements[0]?.tagName).toBe("h1");
 	});
 
 	it("should start search from a sub-node", () => {
-		const html = `
-			<div id="one">
-				<p>Paragraph 1</p>
-			</div>
-			<div id="two">
-				<p>Paragraph 2</p>
-			</div>
-		`;
-		const root = parseHtml(html);
+		const jsx = (
+			<>
+				<div id="one">
+					<p>Paragraph 1</p>
+				</div>
+				<div id="two">
+					<p>Paragraph 2</p>
+				</div>
+			</>
+		);
+		const root = parseJSXElement(jsx);
 		const divTwo = getElementsByTagName(root, "div")[1];
 		if (!divTwo) {
 			throw new Error("No div with index 1 found");
@@ -253,12 +279,14 @@ describe("getElementsByTagName", () => {
 
 describe("getElementsByAttribute", () => {
 	it("should find elements by attribute name", () => {
-		const html = `
-            <div data-testid="first">First</div>
-            <p data-testid="second">Second</p>
-            <span>No testid here</span>
-        `;
-		const root = parseHtml(html);
+		const jsx = (
+			<>
+				<div data-testid="first">First</div>
+				<p data-testid="second">Second</p>
+				<span>No testid here</span>
+			</>
+		);
+		const root = parseJSXElement(jsx);
 		const elements = getElementsByAttribute(root, "data-testid");
 		expect(elements.length).toBe(2);
 		expect(elements[0]?.tagName).toBe("div");
@@ -266,12 +294,14 @@ describe("getElementsByAttribute", () => {
 	});
 
 	it("should find elements by attribute name and value", () => {
-		const html = `
-            <div data-testid="item">Item 1</div>
-            <p data-testid="item">Item 2</p>
-            <div data-testid="other">Other</div>
-        `;
-		const root = parseHtml(html);
+		const jsx = (
+			<>
+				<div data-testid="item">Item 1</div>
+				<p data-testid="item">Item 2</p>
+				<div data-testid="other">Other</div>
+			</>
+		);
+		const root = parseJSXElement(jsx);
 		const elements = getElementsByAttribute(root, "data-testid", "item");
 		expect(elements.length).toBe(2);
 		expect(elements[0]?.tagName).toBe("div");
@@ -279,15 +309,15 @@ describe("getElementsByAttribute", () => {
 	});
 
 	it("should return an empty array if no elements match the attribute name", () => {
-		const html = `<div class="container"></div>`;
-		const root = parseHtml(html);
+		const jsx = <div class="container"></div>;
+		const root = parseJSXElement(jsx);
 		const elements = getElementsByAttribute(root, "id");
 		expect(elements.length).toBe(0);
 	});
 
 	it("should return an empty array if no elements match the attribute value", () => {
-		const html = `<div data-testid="item"></div>`;
-		const root = parseHtml(html);
+		const jsx = <div data-testid="item"></div>;
+		const root = parseJSXElement(jsx);
 		const elements = getElementsByAttribute(
 			root,
 			"data-testid",
@@ -297,8 +327,15 @@ describe("getElementsByAttribute", () => {
 	});
 
 	it("should handle boolean attributes", () => {
-		const html = `<button disabled>Click</button><button>Cancel</button>`;
-		const root = parseHtml(html);
+		const jsx = (
+			<>
+				<button type="button" disabled>
+					Click
+				</button>
+				<button type="button">Cancel</button>
+			</>
+		);
+		const root = parseJSXElement(jsx);
 		const elements = getElementsByAttribute(root, "disabled");
 		expect(elements.length).toBe(1);
 		expect(elements[0]?.tagName).toBe("button");
