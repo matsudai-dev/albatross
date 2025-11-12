@@ -32,8 +32,8 @@ export default function BirdsTable({ birds }: BirdsTableProps) {
 						<td>{row.regions.join(",")}</td>
 						<td>{row.habitats.join(",")}</td>
 						<td>{row.migrationTypes.join(",")}</td>
-						<td>{row.startMonth}</td>
-						<td>{row.endMonth}</td>
+						<td>{row.startMonth ?? "-"}</td>
+						<td>{row.endMonth ?? "-"}</td>
 					</tr>
 				))}
 			</tbody>
