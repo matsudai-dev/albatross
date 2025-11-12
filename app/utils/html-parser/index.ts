@@ -52,7 +52,8 @@ export function tokenize(html: string): Array<AnyToken> {
 					if (attrMatch?.[1]) {
 						const name = attrMatch[1];
 						const value = attrMatch[2] ?? attrMatch[3] ?? attrMatch[4];
-						attributes[name] = value === undefined ? true : value;
+						attributes[name] =
+							value === undefined || value === "" ? true : value;
 						j += attrMatch[0].length;
 					} else {
 						break;
