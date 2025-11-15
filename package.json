@@ -23,6 +23,7 @@
 		"biome": "biome check --write --unsafe",
 		"tsc": "tsc --noEmit",
 		"test": "bun test ./app ./common",
+		"check": "bun run biome && bun run tsc && bun run test",
 		"e2e:chromium": "bun run db:reset && playwright test --project=chromium",
 		"e2e:firefox": "bun run db:reset && playwright test --project=firefox",
 		"e2e:webkit": "bun run db:reset && playwright test --project=webkit",
