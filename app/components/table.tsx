@@ -32,7 +32,10 @@ export function MyTableRow({
 	[key: string]: unknown;
 }) {
 	return (
-		<tr className="border-b transition-colors hover:bg-gray-100" {...props}>
+		<tr
+			className="border-b transition-colors hover:bg-gray-50 dark:hover:bg-gray-800"
+			{...props}
+		>
 			{children}
 		</tr>
 	);
@@ -44,7 +47,7 @@ export function MyTableHead({
 	children?: JSX.Element | Array<JSX.Element> | string;
 }) {
 	return (
-		<th className="h-12 px-4 text-left text-gray-900 [&:has([role=checkbox])]:pr-0">
+		<th className="h-12 px-4 text-left text-gray-900 dark:text-gray-100 [&:has([role=checkbox])]:pr-0">
 			{children}
 		</th>
 	);
