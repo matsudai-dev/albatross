@@ -1,6 +1,7 @@
 import { DB_SYSTEM_USER } from "@common/consts";
 import { sql } from "drizzle-orm";
 import {
+	check,
 	index,
 	integer,
 	primaryKey,
@@ -51,31 +52,112 @@ export const birdsTable = sqliteTable(
 	],
 );
 
-/** Schema for `locations` table */
-export const locationsTable = sqliteTable(
-	"locations",
+/** Schema for `regions` table */
+export const regionsTable = sqliteTable(
+	"regions",
 	{
 		...commonPrimaryFields,
 		nameJa: text("name_ja").notNull().unique(),
 		...commonAuditFields,
 	},
 	(t) => [
-		index("locations_id_index").on(t.id),
-		index("locations_name_ja_index").on(t.nameJa),
+		index("regions_id_index").on(t.id),
+		index("regions_name_ja_index").on(t.nameJa),
 	],
 );
 
-/** Schema for `birds_locations` table */
-export const birdsLocationsTable = sqliteTable(
-	"birds_locations",
+/** Schema for `migration_types` table */
+export const migrationTypesTable = sqliteTable(
+	"migration_types",
+	{
+		...commonPrimaryFields,
+		nameJa: text("name_ja").notNull().unique(),
+		...commonAuditFields,
+	},
+	(t) => [
+		index("migration_types_id_index").on(t.id),
+		index("migration_types_name_ja_index").on(t.nameJa),
+	],
+);
+
+/** Schema for `habitats` table */
+export const habitatsTable = sqliteTable(
+	"habitats",
+	{
+		...commonPrimaryFields,
+		nameJa: text("name_ja").notNull().unique(),
+		...commonAuditFields,
+	},
+	(t) => [
+		index("habitats_id_index").on(t.id),
+		index("habitats_name_ja_index").on(t.nameJa),
+	],
+);
+
+export const birdsRegionsTable = sqliteTable(
+	"birds_regions",
 	{
 		birdId: integer("bird_id")
 			.notNull()
 			.references(() => birdsTable.id),
-		locationId: integer("location_id")
+		regionId: integer("region_id")
 			.notNull()
-			.references(() => locationsTable.id),
+			.references(() => regionsTable.id),
 		...commonAuditFields,
 	},
-	(t) => [primaryKey({ columns: [t.birdId, t.locationId] })],
+	(t) => [
+		primaryKey({ columns: [t.birdId, t.regionId] }),
+		index("birds_regions_bird_id_index").on(t.birdId),
+		index("birds_regions_region_id_index").on(t.regionId),
+	],
+);
+
+/** Schema for `bird_migration_types_regions` table */
+export const birdMigrationRegionsTable = sqliteTable(
+	"bird_migration_types_regions",
+	{
+		birdId: integer("bird_id")
+			.notNull()
+			.references(() => birdsTable.id),
+		regionId: integer("region_id")
+			.notNull()
+			.references(() => regionsTable.id),
+		migrationTypeId: integer("migration_type_id")
+			.notNull()
+			.references(() => migrationTypesTable.id),
+		startMonth: integer("start_month").notNull(),
+		endMonth: integer("end_month").notNull(),
+		...commonAuditFields,
+	},
+	(t) => [
+		primaryKey({ columns: [t.birdId, t.regionId] }),
+		index("bird_migration_types_regions_bird_id_index").on(t.birdId),
+		index("bird_migration_types_regions_region_id_index").on(t.regionId),
+		index("bird_migration_types_regions_migration_type_id_index").on(
+			t.migrationTypeId,
+		),
+		check(
+			"bird_migration_types_regions_start_month_check",
+			sql`${t.startMonth} BETWEEN 1 AND 12`,
+		),
+		check(
+			"bird_migration_types_regions_end_month_check",
+			sql`${t.endMonth} BETWEEN 1 AND 12`,
+		),
+	],
+);
+
+/** Schema for `birds_habitats` table */
+export const birdsHabitatsTable = sqliteTable(
+	"birds_habitats",
+	{
+		birdId: integer("bird_id")
+			.notNull()
+			.references(() => birdsTable.id),
+		habitatId: integer("habitat_id")
+			.notNull()
+			.references(() => habitatsTable.id),
+		...commonAuditFields,
+	},
+	(t) => [primaryKey({ columns: [t.birdId, t.habitatId] })],
 );

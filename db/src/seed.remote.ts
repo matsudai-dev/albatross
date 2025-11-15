@@ -1,8 +1,8 @@
 import type { D1Database } from "@cloudflare/workers-types";
-import { birdsLocationsTable, birdsTable, locationsTable } from "@db/schemas";
+import { birdsHabitatsTable, birdsTable, habitatsTable } from "@db/schemas";
 import { birdsSeed } from "@db/seeds/birds";
-import { birdsLocationsSeed } from "@db/seeds/birds-locations";
-import { locationsSeed } from "@db/seeds/locations";
+import { birdsHabitatsSeed } from "@db/seeds/birds-habitats";
+import { habitatsSeed } from "@db/seeds/habitats";
 import { drizzle } from "drizzle-orm/d1";
 
 export default {
@@ -13,52 +13,47 @@ export default {
 			console.log("Seeding birds...");
 			await db.insert(birdsTable).values(birdsSeed).onConflictDoNothing();
 
-			console.log("Seeding locations...");
-			await db
-				.insert(locationsTable)
-				.values(locationsSeed)
-				.onConflictDoNothing();
+			console.log("Seeding habitats...");
+			await db.insert(habitatsTable).values(habitatsSeed).onConflictDoNothing();
 
-			console.log("Seeding birds_locations...");
+			console.log("Seeding birds_habitats...");
 			const allBirds = await db
 				.select({ id: birdsTable.id, nameJa: birdsTable.nameJa })
 				.from(birdsTable);
-			const allLocations = await db
-				.select({ id: locationsTable.id, nameJa: locationsTable.nameJa })
-				.from(locationsTable);
+			const allHabitats = await db
+				.select({ id: habitatsTable.id, nameJa: habitatsTable.nameJa })
+				.from(habitatsTable);
 
-			const birdsLocationsToInsert: Array<{
+			const birdsHabitatsToInsert: Array<{
 				birdId: number;
-				locationId: number;
+				habitatId: number;
 			}> = [];
 
-			for (const entry of birdsLocationsSeed) {
+			for (const entry of birdsHabitatsSeed) {
 				const bird = allBirds.find((b) => b.nameJa === entry.birdNameJa);
 				if (!bird) {
 					console.warn(`Bird not found: ${entry.birdNameJa}`);
 					continue;
 				}
 
-				for (const locationNameJa of entry.locationNameJa) {
-					const location = allLocations.find(
-						(l) => l.nameJa === locationNameJa,
-					);
-					if (!location) {
-						console.warn(`Location not found: ${locationNameJa}`);
+				for (const habitatNameJa of entry.habitatNameJa) {
+					const habitat = allHabitats.find((l) => l.nameJa === habitatNameJa);
+					if (!habitat) {
+						console.warn(`Habitat not found: ${habitatNameJa}`);
 						continue;
 					}
 
-					birdsLocationsToInsert.push({
+					birdsHabitatsToInsert.push({
 						birdId: bird.id,
-						locationId: location.id,
+						habitatId: habitat.id,
 					});
 				}
 			}
 
-			if (birdsLocationsToInsert.length > 0) {
+			if (birdsHabitatsToInsert.length > 0) {
 				await db
-					.insert(birdsLocationsTable)
-					.values(birdsLocationsToInsert)
+					.insert(birdsHabitatsTable)
+					.values(birdsHabitatsToInsert)
 					.onConflictDoNothing();
 			}
 

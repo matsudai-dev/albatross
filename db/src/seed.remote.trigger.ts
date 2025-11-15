@@ -7,9 +7,14 @@ console.log(`Starting seed for ${env}...`);
 
 const wrangler = spawn(
 	"wrangler",
-	["dev", "./db/src/seed.remote.ts", envFlag, "--remote", "--port", "8787"].filter(
-		Boolean,
-	),
+	[
+		"dev",
+		"./db/src/seed.remote.ts",
+		envFlag,
+		"--remote",
+		"--port",
+		"8787",
+	].filter(Boolean),
 	{
 		shell: true,
 		detached: true,

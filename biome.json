@@ -14,5 +14,12 @@
 			"!node_modules",
 			"!e2e/.reqports"
 		]
+	},
+	"linter": {
+		"rules": {
+			"suspicious": {
+				"noUnknownAtRules": "off"
+			}
+		}
 	}
 }
