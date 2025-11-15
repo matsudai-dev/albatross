@@ -1,3 +1,12 @@
+import {
+	MyTable,
+	MyTableBody,
+	MyTableCell,
+	MyTableHead,
+	MyTableHeader,
+	MyTableRow,
+} from "@/components/table";
+
 export interface BirdRow {
 	id: number;
 	nameJa: string;
@@ -14,29 +23,29 @@ export interface BirdsTableProps {
 
 export default function BirdsTable({ birds }: BirdsTableProps) {
 	return (
-		<table>
-			<thead>
-				<tr>
-					<th>和名</th>
-					<th>生息域</th>
-					<th>生息環境</th>
-					<th>渡り区分</th>
-					<th>到着月</th>
-					<th>出発月</th>
-				</tr>
-			</thead>
-			<tbody>
+		<MyTable>
+			<MyTableHeader>
+				<MyTableRow>
+					<MyTableHead>和名</MyTableHead>
+					<MyTableHead>生息域</MyTableHead>
+					<MyTableHead>生息環境</MyTableHead>
+					<MyTableHead>渡り区分</MyTableHead>
+					<MyTableHead>到着月</MyTableHead>
+					<MyTableHead>出発月</MyTableHead>
+				</MyTableRow>
+			</MyTableHeader>
+			<MyTableBody>
 				{birds.map((row) => (
-					<tr key={String(row.id)} data-testid="bird-row">
-						<td>{row.nameJa}</td>
-						<td>{row.regions.join(",")}</td>
-						<td>{row.habitats.join(",")}</td>
-						<td>{row.migrationTypes.join(",")}</td>
-						<td>{row.startMonth ?? "-"}</td>
-						<td>{row.endMonth ?? "-"}</td>
-					</tr>
+					<MyTableRow key={String(row.id)} data-testid="bird-row">
+						<MyTableCell>{row.nameJa}</MyTableCell>
+						<MyTableCell>{row.regions.join(",")}</MyTableCell>
+						<MyTableCell>{row.habitats.join(",")}</MyTableCell>
+						<MyTableCell>{row.migrationTypes.join(",")}</MyTableCell>
+						<MyTableCell>{row.startMonth ?? "-"}</MyTableCell>
+						<MyTableCell>{row.endMonth ?? "-"}</MyTableCell>
+					</MyTableRow>
 				))}
-			</tbody>
-		</table>
+			</MyTableBody>
+		</MyTable>
 	);
 }
