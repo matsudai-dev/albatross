@@ -52,9 +52,11 @@ export default createRoute(async (c) => {
 	return c.render(
 		<>
 			<title>野鳥一覧</title>
-			<h1>野鳥一覧</h1>
-			<h2>いま見つけられる野鳥を探そう</h2>
-			<BirdsTable birds={birds} />
+			<h1 className="text-center mt-8">野鳥一覧</h1>
+			<h2 className="text-center mb-8">いま見つけられる野鳥を探そう</h2>
+			<div className="max-w-7xl mx-auto px-4">
+				<BirdsTable birds={birds} />
+			</div>
 		</>,
 	);
 });
