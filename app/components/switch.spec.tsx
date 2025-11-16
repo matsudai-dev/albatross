@@ -144,4 +144,82 @@ describe("MySwitch", () => {
 			);
 		}
 	});
+
+	test("renders with checked prop", () => {
+		const root = parseJSXElement(<MySwitch checked={true} />);
+		const inputs = getElementsByTagName(root, "input");
+
+		const input = inputs[0];
+		if (!input) throw new Error("Expected input element to exist");
+
+		if (input.type === "Element") {
+			expect(input.attributes.checked).toBe(true);
+		}
+	});
+
+	test("renders with unchecked prop", () => {
+		const root = parseJSXElement(<MySwitch checked={false} />);
+		const inputs = getElementsByTagName(root, "input");
+
+		const input = inputs[0];
+		if (!input) throw new Error("Expected input element to exist");
+
+		if (input.type === "Element") {
+			// checked={false} is typically omitted from HTML attributes
+			// The presence of the input without checked attribute indicates unchecked state
+			expect(input.attributes.checked).toBeUndefined();
+		}
+	});
+
+	test("renders without checked prop defaults to undefined", () => {
+		const root = parseJSXElement(<MySwitch />);
+		const inputs = getElementsByTagName(root, "input");
+
+		const input = inputs[0];
+		if (!input) throw new Error("Expected input element to exist");
+
+		if (input.type === "Element") {
+			expect(input.attributes.checked).toBeUndefined();
+		}
+	});
+
+	test("supports controlled component with checked prop", () => {
+		// Test that checked prop can be passed (for controlled components)
+		const rootChecked = parseJSXElement(<MySwitch checked={true} />);
+		const inputsChecked = getElementsByTagName(rootChecked, "input");
+		const inputChecked = inputsChecked[0];
+
+		if (!inputChecked) throw new Error("Expected input element to exist");
+		if (inputChecked.type === "Element") {
+			expect(inputChecked.attributes.checked).toBe(true);
+		}
+
+		const rootUnchecked = parseJSXElement(<MySwitch checked={false} />);
+		const inputsUnchecked = getElementsByTagName(rootUnchecked, "input");
+		const inputUnchecked = inputsUnchecked[0];
+
+		if (!inputUnchecked) throw new Error("Expected input element to exist");
+		if (inputUnchecked.type === "Element") {
+			// In HTML, checked={false} typically doesn't render the attribute
+			expect(
+				inputUnchecked.attributes.checked === undefined ||
+					inputUnchecked.attributes.checked === false,
+			).toBe(true);
+		}
+	});
+
+	test("accepts onChange prop for controlled component", () => {
+		// Test that onChange prop can be passed without errors
+		const handleChange = (_checked: boolean) => {
+			// Mock handler - in actual runtime this would be called
+		};
+
+		// This should not throw an error
+		const root = parseJSXElement(<MySwitch onChange={handleChange} />);
+		const inputs = getElementsByTagName(root, "input");
+
+		expect(inputs.length).toBe(1);
+		const input = inputs[0];
+		if (!input) throw new Error("Expected input element to exist");
+	});
 });
