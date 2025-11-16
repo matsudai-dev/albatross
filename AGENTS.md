@@ -41,34 +41,26 @@ docker compose -f .devcontainer/compose.yaml up -d
 
 ## GitHub MCP Server integration
 This project can be accessed via GitHub MCP Server for AI agents.
+The host OS has GitHub MCP Server configured with a personal access token, which is available for use.
 
 ### Repository information
 - Owner: matsudai-dev
 - Repository: albatross
 - Default branch: main
 
-### Available operations
-- Search code across the repository
-- Read file contents
-- Create and manage issues
-- Create and review pull requests
-- Access commit history and branches
+### Working with GitHub
+For all GitHub operations (creating issues, pull requests, searching code, etc.), use the GitHub MCP Server tools.
+The MCP Server provides access to repository information, issue management, and code search capabilities.
 
-### How to create an issue
-
-- **Title**
-    - Use a clear, concise description of the problem or feature
-    - Start with a verb (e.g., "Add", "Fix", "Update")
-- **Description**
-    - Clearly explain the context, requirements, and expected behavior
-    - Include steps to reproduce for bugs
-    - Include acceptance criteria for features
-- **Assignees**
-    - Assign to the person responsible for implementation
-    - Leave unassigned if seeking volunteers
-- **Labels**
-    - Use appropriate labels: `bug`, `enhancement`, `documentation`, `question`, etc.
-    - Add priority labels if applicable: `priority: high`, `priority: low`
+When creating issues:
+- Query the MCP Server for repository context and existing patterns
+- Use clear, descriptive titles starting with a verb (e.g., "Add", "Fix", "Update")
+- Structure the description with:
+    - **Context**: Background and motivation
+    - **Requirements**: Specific implementation details
+    - **Acceptance Criteria**: Testable outcomes
+- Reference existing code patterns when relevant
+- Apply appropriate labels: `bug`, `enhancement`, `documentation`, `question`, etc.
 
 ### How to work on an issue
 
