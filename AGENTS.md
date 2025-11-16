@@ -69,3 +69,14 @@ The host OS has `gh` CLI installed with access token configured.
 2. Implement following the TDD practices described above
 3. Create a pull request using `gh` command (do not use browser)
     - Example: `gh pr create --title "..." --body "..." --base main --head feature/#n`
+
+#### Commit messages
+- Use conventional commit format with lowercase prefixes (e.g., "feat:", "fix:", "chore:")
+- Keep messages concise - prefer single-line format to reduce overhead
+- Common prefixes:
+    - `feat:` - New features
+    - `fix:` - Bug fixes
+    - `chore:` - Maintenance tasks (dependencies, configuration)
+    - `docs:` - Documentation changes
+    - `test:` - Test additions or modifications
+    - `refactor:` - Code refactoring without changing functionality
