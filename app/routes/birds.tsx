@@ -10,6 +10,7 @@ import {
 } from "@db/schemas";
 import { eq, sql } from "drizzle-orm";
 import { createRoute } from "honox/factory";
+import { MyLayout } from "@/components/layout";
 import BirdsTable, { type BirdRow } from "@/islands/birds-table";
 
 export default createRoute(async (c) => {
@@ -50,13 +51,12 @@ export default createRoute(async (c) => {
 	}));
 
 	return c.render(
-		<>
-			<title>野鳥一覧</title>
-			<h1 className="text-center mt-8">野鳥一覧</h1>
-			<h2 className="text-center mb-8">いま見つけられる野鳥を探そう</h2>
-			<div className="max-w-7xl mx-auto px-4">
+		<MyLayout>
+			<h2 className="text-center mt-6">野鳥一覧</h2>
+			<h3 className="text-center mt-6">いま見つけられる野鳥を探そう</h3>
+			<div className="max-w-7xl mt-8 mx-auto px-4">
 				<BirdsTable birds={birds} />
 			</div>
-		</>,
+		</MyLayout>,
 	);
 });
