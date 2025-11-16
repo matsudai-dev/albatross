@@ -37,6 +37,7 @@
 		"deploy:prod": "vite build --mode client && vite build && wrangler deploy"
 	},
 	"dependencies": {
+		"@mdi/font": "^7.4.47",
 		"drizzle-orm": "latest",
 		"hono": "latest",
 		"honox": "latest"
