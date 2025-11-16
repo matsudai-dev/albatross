@@ -8,8 +8,8 @@ import {
 import { MyAppBar } from "./app-bar";
 
 describe("MyAppBar", () => {
-	it("should render header with default title", () => {
-		const jsx = <MyAppBar />;
+	it("should render header with title", () => {
+		const jsx = <MyAppBar title={PROJECT_NAME} />;
 		const root = parseJSXElement(jsx);
 		const headers = getElementsByTagName(root, "header");
 
@@ -42,7 +42,7 @@ describe("MyAppBar", () => {
 	});
 
 	it("should have fixed positioning with correct height", () => {
-		const jsx = <MyAppBar />;
+		const jsx = <MyAppBar title="Test" />;
 		const root = parseJSXElement(jsx);
 		const headers = getElementsByTagName(root, "header");
 
@@ -60,7 +60,7 @@ describe("MyAppBar", () => {
 	});
 
 	it("should have flex layout with centered items", () => {
-		const jsx = <MyAppBar />;
+		const jsx = <MyAppBar title="Test" />;
 		const root = parseJSXElement(jsx);
 		const headers = getElementsByTagName(root, "header");
 
@@ -75,7 +75,7 @@ describe("MyAppBar", () => {
 	});
 
 	it("should have background and shadow styles", () => {
-		const jsx = <MyAppBar />;
+		const jsx = <MyAppBar title="Test" />;
 		const root = parseJSXElement(jsx);
 		const headers = getElementsByTagName(root, "header");
 
@@ -91,7 +91,7 @@ describe("MyAppBar", () => {
 	});
 
 	it("should render prepend content when provided", () => {
-		const jsx = <MyAppBar prepend={<span>Left Content</span>} />;
+		const jsx = <MyAppBar title="Test" prepend={<span>Left Content</span>} />;
 		const root = parseJSXElement(jsx);
 		const spans = getElementsByTagName(root, "span");
 
@@ -102,7 +102,7 @@ describe("MyAppBar", () => {
 	});
 
 	it("should not render prepend div when prepend is undefined", () => {
-		const jsx = <MyAppBar />;
+		const jsx = <MyAppBar title="Test" />;
 		const root = parseJSXElement(jsx);
 		const headers = getElementsByTagName(root, "header");
 
@@ -121,7 +121,7 @@ describe("MyAppBar", () => {
 	});
 
 	it("should render append content when provided", () => {
-		const jsx = <MyAppBar append={<span>Right Content</span>} />;
+		const jsx = <MyAppBar title="Test" append={<span>Right Content</span>} />;
 		const root = parseJSXElement(jsx);
 		const spans = getElementsByTagName(root, "span");
 
@@ -157,7 +157,7 @@ describe("MyAppBar", () => {
 	});
 
 	it("should have flex-1 on h1 for flexible width", () => {
-		const jsx = <MyAppBar />;
+		const jsx = <MyAppBar title="Test" />;
 		const root = parseJSXElement(jsx);
 		const h1Elements = getElementsByTagName(root, "h1");
 
@@ -171,7 +171,7 @@ describe("MyAppBar", () => {
 	});
 
 	it("should render spacer div with h-16", () => {
-		const jsx = <MyAppBar />;
+		const jsx = <MyAppBar title="Test" />;
 		const root = parseJSXElement(jsx);
 		const divs = getElementsByTagName(root, "div");
 
@@ -186,8 +186,8 @@ describe("MyAppBar", () => {
 		expect(spacerDiv).toBeDefined();
 	});
 
-	it("should wrap prepend content in div with mx-5", () => {
-		const jsx = <MyAppBar prepend={<span>Left</span>} />;
+	it("should wrap prepend content in div with ml-5", () => {
+		const jsx = <MyAppBar title="Test" prepend={<span>Left</span>} />;
 		const root = parseJSXElement(jsx);
 		const headers = getElementsByTagName(root, "header");
 
@@ -201,14 +201,14 @@ describe("MyAppBar", () => {
 					child.type === "Element" &&
 					child.tagName === "div" &&
 					typeof child.attributes.class === "string" &&
-					child.attributes.class.includes("mx-5"),
+					child.attributes.class.includes("ml-5"),
 			);
 			expect(prependDiv).toBeDefined();
 		}
 	});
 
-	it("should wrap append content in div with mx-5", () => {
-		const jsx = <MyAppBar append={<span>Right</span>} />;
+	it("should wrap append content in div with mr-5", () => {
+		const jsx = <MyAppBar title="Test" append={<span>Right</span>} />;
 		const root = parseJSXElement(jsx);
 		const headers = getElementsByTagName(root, "header");
 
@@ -222,14 +222,14 @@ describe("MyAppBar", () => {
 					child.type === "Element" &&
 					child.tagName === "div" &&
 					typeof child.attributes.class === "string" &&
-					child.attributes.class.includes("mx-5"),
+					child.attributes.class.includes("mr-5"),
 			);
 			expect(appendDiv).toBeDefined();
 		}
 	});
 
 	it("should handle string prepend content", () => {
-		const jsx = <MyAppBar prepend="Left Text" />;
+		const jsx = <MyAppBar title="Test" prepend="Left Text" />;
 		const root = parseJSXElement(jsx);
 		const headers = getElementsByTagName(root, "header");
 
@@ -242,7 +242,7 @@ describe("MyAppBar", () => {
 	});
 
 	it("should handle string append content", () => {
-		const jsx = <MyAppBar append="Right Text" />;
+		const jsx = <MyAppBar title="Test" append="Right Text" />;
 		const root = parseJSXElement(jsx);
 		const headers = getElementsByTagName(root, "header");
 
