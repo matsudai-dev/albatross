@@ -38,6 +38,7 @@ docker compose -f .devcontainer/compose.yaml up -d
     4. Run the test command to confirm all tests pass
 - Place `{filename}.spec.ts` in the same directory as `{filename}.ts`
 - Use `./app/utils/html-parser` for DOM parsing in component tests
+- `"noUncheckedIndexedAccess": true` is configured in TypeScript, so indexed elements may be `undefined`. In test code that doesn't handle `undefined`, throw an error explicitly
 
 ## GitHub MCP Server integration
 This project can be accessed via GitHub MCP Server for AI agents.
@@ -49,10 +50,11 @@ The host OS has GitHub MCP Server configured with a personal access token, which
 - Default branch: main
 
 ### Working with GitHub
-For all GitHub operations (creating issues, pull requests, searching code, etc.), use the GitHub MCP Server tools.
+For all GitHub operations (creating issues, pull requests, searching code, etc.), use the GitHub MCP Server tools and `gh` command.
 The MCP Server provides access to repository information, issue management, and code search capabilities.
+The host OS has `gh` CLI installed with access token configured.
 
-When creating issues:
+#### Creating issues
 - Query the MCP Server for repository context and existing patterns
 - Use clear, descriptive titles starting with a verb (e.g., "Add", "Fix", "Update")
 - Structure the description with:
@@ -62,8 +64,8 @@ When creating issues:
 - Reference existing code patterns when relevant
 - Apply appropriate labels: `bug`, `enhancement`, `documentation`, `question`, etc.
 
-### How to work on an issue
-
+#### Working on an issue
 1. Create and checkout a new branch named `feature/#n` from the `main` branch (where `#n` is the issue number)
 2. Implement following the TDD practices described above
-3. Create a pull request
+3. Create a pull request using `gh` command (do not use browser)
+    - Example: `gh pr create --title "..." --body "..." --base main --head feature/#n`
