@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "@mdi/font/css/materialdesignicons.min.css";
 
+@variant dark (&:where(.dark, .dark *));
+
 @layer base {
 	body {
 		@apply bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100;

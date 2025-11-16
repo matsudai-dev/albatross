@@ -1,5 +1,6 @@
 import { PROJECT_NAME } from "@common/consts";
 import type { JSX } from "hono/jsx/jsx-runtime";
+import ThemeToggle from "@/islands/theme-toggle";
 import { MyAppBar } from "./app-bar";
 
 export interface LayoutProps {
@@ -16,7 +17,7 @@ export function MyLayout({
 	return (
 		<>
 			<title>{title}</title>
-			{showAppBar && <MyAppBar title={title} />}
+			{showAppBar && <MyAppBar title={title} append={<ThemeToggle />} />}
 			<main>{children}</main>
 		</>
 	);
